@@ -1,148 +1,73 @@
-import { criarPerfil } from '../auth.js';
-import { mostrarToast } from '../utils/toast.js';
-
-export function render(raiz, { uid }, navegar) {
-  raiz.innerHTML = `
-    <div class="topo-marca">
-      <img src="/logo-orgulho-sesi.png" alt="Orgulho de Ser Sesi" />
-    </div>
-    <div class="tela">
-      <h1 class="tela-titulo">Bem-vindo!</h1>
-      <p class="tela-subtitulo">vamos te conhecer</p>
-
-      <form id="form-cadastro" class="cartao" style="display: flex; flex-direction: column; gap: 16px;">
-        <div class="campo">
-          <label for="campo-nome">Nome</label>import { criarPerfil } from '../auth.js';
+import { ATIVIDADES } from '../activities.js';
 import { hero } from '../utils/hero.js';
-import { mostrarToast } from '../utils/toast.js';
+import { posicaoDoParticipante } from '../ranking.js';
 
-export function render(raiz, { uid }, navegar) {
+export function render(raiz, { uid, perfil }, navegar) {
+  const concluidas = new Set(perfil.atividadesConcluidas ?? []);
+  const feitas = ATIVIDADES.filter((a) => concluidas.has(a.id));
+  const pendentes = ATIVIDADES.filter((a) => !concluidas.has(a.id));
+
   raiz.innerHTML = `
-    ${hero({
-      chapeu: 'Bem-vindo ao evento',
-      titulo: 'Vamos te identificar',
-      descricao: 'Só o seu nome e os 3 primeiros números da matrícula. Sem e-mail, sem senha.',
-      comLogo: true,
-    })}
+    ${hero({ chapeu: `Olá, ${perfil.nome}`, titulo: 'Sua pontuação' })}
     <div class="corpo">
-      <form id="form-cadastro" class="cartao">
-        <div class="campo">
-          <label for="campo-nome">Nome</label>
-          <input id="campo-nome" name="nome" type="text" autocomplete="given-name" required />
+      <div class="bloco-pontos">
+        <div>
+          <div class="rotulo">Total do dia</div>
+          <div class="colocacao" id="colocacao">Carregando posição...</div>
         </div>
-        <div class="campo">
-          <label for="campo-sobrenome">Sobrenome</label>
-          <input id="campo-sobrenome" name="sobrenome" type="text" autocomplete="family-name" required />
+        <div style="text-align: right;">
+          <div class="numero">${perfil.pontos ?? 0}</div>
         </div>
-        <div class="campo">
-          <label for="campo-matricula">3 primeiros da matrícula</label>
-          <input
-            id="campo-matricula"
-            name="matricula"
-            type="text"
-            inputmode="numeric"
-            pattern="[0-9]{3}"
-            maxlength="3"
-            placeholder="427"
-            required
-          />
-        </div>
-      </form>
-      <button id="botao-entrar" class="botao">Entrar no evento</button>
+        <div class="estrela">★</div>
+      </div>
+
+      <button id="botao-escanear" class="botao botao-azul">Escanear atividade</button>
+      <button id="botao-ranking" class="botao-neutro">Ver ranking geral</button>
+
+      <div class="cartao">
+        <h3>Atividades do dia</h3>
+        ${feitas
+          .map(
+            (a) => `
+              <div class="atividade-feita">
+                <span class="marca">✓</span>${a.nome}
+                <span class="pontos">+${a.pontos}</span>
+              </div>
+            `
+          )
+          .join('')}
+        ${pendentes
+          .map(
+            (a) => `
+              <div class="atividade-pendente">
+                <span class="marca"></span>${a.nome}
+                <span class="pontos">+${a.pontos}</span>
+              </div>
+            `
+          )
+          .join('')}
+      </div>
     </div>
   `;
 
-  const form = raiz.querySelector('#form-cadastro');
-  const botao = raiz.querySelector('#botao-entrar');
-
-  async function enviar() {
-    const dados = new FormData(form);
-    const nome = dados.get('nome').trim();
-    const sobrenome = dados.get('sobrenome').trim();
-    const matricula = dados.get('matricula').trim();
-
-    if (!nome || !sobrenome) {
-      mostrarToast('Preencha nome e sobrenome.', { erro: true });
-      return;
-    }
-    if (!/^\d{3}$/.test(matricula)) {
-      mostrarToast('Digite os 3 primeiros números da matrícula.', { erro: true });
-      return;
-    }
-
-    botao.disabled = true;
-    botao.textContent = 'Só um instante...';
-
-    try {
-      const perfil = await criarPerfil(uid, { nome, sobrenome, matriculaParcial: matricula });
-      const view = await import('./inicio.js');
-      navegar(view, { uid, perfil });
-    } catch (erro) {
-      console.error(erro);
-      mostrarToast('Não deu pra salvar seu cadastro. Tenta de novo.', { erro: true });
-      botao.disabled = false;
-      botao.textContent = 'Entrar no evento';
-    }
-  }
-
-  botao.addEventListener('click', enviar);
-  form.addEventListener('submit', (evento) => {
-    evento.preventDefault();
-    enviar();
+  raiz.querySelector('#botao-escanear').addEventListener('click', async () => {
+    const view = await import('./scan.js');
+    navegar(view, { uid, perfil });
   });
-}
 
-          <input id="campo-nome" name="nome" type="text" autocomplete="given-name" required />
-        </div>
-        <div class="campo">
-          <label for="campo-sobrenome">Sobrenome</label>
-          <input id="campo-sobrenome" name="sobrenome" type="text" autocomplete="family-name" required />
-        </div>
-        <div class="campo">
-          <label for="campo-matricula">3 primeiros números da matrícula</label>
-          <input
-            id="campo-matricula"
-            name="matricula"
-            type="text"
-            inputmode="numeric"
-            pattern="[0-9]{3}"
-            maxlength="3"
-            placeholder="ex: 042"
-            required
-          />
-        </div>
-        <button type="submit" class="botao botao-primario">Começar</button>
-      </form>
-    </div>
-  `;
-
-  const form = raiz.querySelector('#form-cadastro');
-  form.addEventListener('submit', async (evento) => {
-    evento.preventDefault();
-    const botao = form.querySelector('button');
-    const dados = new FormData(form);
-    const matricula = dados.get('matricula').trim();
-
-    if (!/^\d{3}$/.test(matricula)) {
-      mostrarToast('Digite os 3 primeiros números da matrícula.', { erro: true });
-      return;
-    }
-
-    botao.disabled = true;
-    botao.textContent = 'Só um instante...';
-
-    try {
-      const perfil = await criarPerfil(uid, {
-        nome: dados.get('nome'),
-        sobrenome: dados.get('sobrenome'),
-        matriculaParcial: matricula,
-      });
-      import('./inicio.js').then((view) => navegar(view, { uid, perfil }));
-    } catch (erro) {
-      console.error(erro);
-      mostrarToast('Não deu pra salvar seu cadastro. Tenta de novo.', { erro: true });
-      botao.disabled = false;
-      botao.textContent = 'Começar';
-    }
+  raiz.querySelector('#botao-ranking').addEventListener('click', async () => {
+    const view = await import('./ranking-view.js');
+    navegar(view, { uid, perfil });
   });
+
+  posicaoDoParticipante(uid)
+    .then((posicao) => {
+      const alvo = raiz.querySelector('#colocacao');
+      if (!alvo) return;
+      alvo.textContent = posicao ? `Você está em ${posicao}º lugar` : 'Escaneie para entrar no ranking';
+    })
+    .catch(() => {
+      const alvo = raiz.querySelector('#colocacao');
+      if (alvo) alvo.textContent = '';
+    });
 }
