@@ -1,0 +1,57 @@
+rules_version = '2';
+
+// Regras do banco pro app "Orgulho de Ser Sesi". A ideia central: o app
+// nunca é a fonte da verdade sobre pontos, o Firestore é. Mesmo que alguém
+// abra o devtools e tente escrever direto na coleção, essas regras barram
+// qualquer coisa fora do fluxo esperado.
+//
+// IMPORTANTE: a tabela de pontos abaixo tem que ficar igual à de
+// src/activities.js. Se mudar uma, muda a outra.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function pontosDaAtividade(id) {
+      return {
+        'oficina-robotica': 20,
+        'trilha-seguranca': 15,
+        'espaco-maker': 20,
+        'mostra-projetos': 15,
+        'jogo-casa-industria': 25,
+        'roda-conversa': 15,
+      }[id];
+    }
+
+    match /participantes/{uid} {
+      // O ranking precisa ler a coleção inteira (TV e tela de ranking no
+      // app), então leitura é pública. Nada aqui é dado sensível — só nome,
+      // sobrenome e pontuação.
+      allow read: if true;
+
+      // Cadastro: só o próprio dono do crachá anônimo pode criar o
+      // documento dele, e só uma vez.
+      allow create: if request.auth != null
+        && request.auth.uid == uid
+        && request.resource.data.pontos == 0
+        && request.resource.data.atividadesConcluidas.size() == 0
+        && request.resource.data.nome is string
+        && request.resource.data.sobrenome is string
+        && request.resource.data.matriculaParcial.matches('^[0-9]{3}$');
+
+      // Pontuação: só permite adicionar exatamente UMA atividade nova por
+      // escrita, e só se ela ainda não estava na lista, e só se os pontos
+      // batem com o valor oficial daquela atividade. Nome/sobrenome/matrícula
+      // não podem ser alterados depois do cadastro.
+      allow update: if request.auth != null
+        && request.auth.uid == uid
+        && request.resource.data.nome == resource.data.nome
+        && request.resource.data.sobrenome == resource.data.sobrenome
+        && request.resource.data.matriculaParcial == resource.data.matriculaParcial
+        && request.resource.data.atividadesConcluidas.size() == resource.data.atividadesConcluidas.size() + 1
+        && !(request.resource.data.atividadesConcluidas[-1] in resource.data.atividadesConcluidas)
+        && request.resource.data.pontos == resource.data.pontos
+          + pontosDaAtividade(request.resource.data.atividadesConcluidas[-1]);
+
+      allow delete: if false;
+    }
+  }
+}
