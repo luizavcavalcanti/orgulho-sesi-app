@@ -1,6 +1,10 @@
 /*
-  Tokens da identidade visual "Orgulho de Ser Sesi", extraída dos materiais
-  impressos oficiais do evento (KV 2026). Se a marca mudar, é aqui que se mexe.
+  Tokens da identidade visual "Orgulho de Ser Sesi" (KV 2026).
+
+  Sobre tipografia: a Neo Sans carrega a interface inteira, inclusive os
+  títulos, no peso 900. A Oravel é fonte de pôster — bonita, mas ilegível em
+  corpo pequeno de celular; por isso ela só aparece no número grande da
+  pontuação, que é onde o desenho dela funciona.
 */
 
 @font-face {
@@ -11,95 +15,63 @@
 }
 
 @font-face {
-  font-family: 'Oravel Inline';
-  src: url('/fonts/Oravel-Inline.woff2') format('woff2');
-  font-weight: 700;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Owine Soul';
-  src: url('/fonts/OwineSoul-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neo Sans Std';
+  font-family: 'Neo Sans';
   src: url('/fonts/NeoSansStd-Regular.woff2') format('woff2');
   font-weight: 400;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Neo Sans Std';
+  font-family: 'Neo Sans';
   src: url('/fonts/NeoSansStd-Medium.woff2') format('woff2');
   font-weight: 500;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Neo Sans Std';
+  font-family: 'Neo Sans';
   src: url('/fonts/NeoSansStd-Bold.woff2') format('woff2');
   font-weight: 700;
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Neo Sans';
+  src: url('/fonts/NeoSansStd-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-display: swap;
+}
+
 :root {
-  /* paleta oficial */
   --azul: #254ba0;
+  --azul-profundo: #1b3a80;
+  --azul-claro: #4377c5;
   --amarelo: #f9b919;
+  --amarelo-sombra: #c98f0f;
   --verde: #5dc137;
   --vermelho: #f62528;
+  --ciano: #4dc5e3;
 
-  --azul-escuro: #1a3776;
-  --amarelo-claro: #fdd77a;
-  --tinta: #1c1c1c;
-  --bg-claro: #fef9ef;
+  --tinta: #12224d;
+  --apagado: #7c89a6;
+  --linha: #dfe5f2;
+  --fundo: #f6f8fc;
   --branco: #ffffff;
-  --cinza-linha: #e4ded0;
 
-  /* tipografia */
-  --fonte-titulo: 'Oravel', 'Arial Black', sans-serif;
-  --fonte-titulo-inline: 'Oravel Inline', 'Arial Black', sans-serif;
-  --fonte-destaque: 'Owine Soul', cursive, sans-serif;
-  --fonte-texto: 'Neo Sans Std', 'Helvetica Neue', Arial, sans-serif;
+  --fonte: 'Neo Sans', 'Helvetica Neue', Arial, sans-serif;
+  --fonte-numero: 'Oravel', 'Arial Black', sans-serif;
 
-  /* o visual "adesivo" do evento: sombra sólida, sem blur, offset fixo */
-  --sombra-sticker: 4px 4px 0 var(--tinta);
-  --sombra-sticker-sm: 3px 3px 0 var(--tinta);
-  --raio: 20px;
-  --raio-pequeno: 12px;
-
-  --largura-conteudo: 480px;
+  --largura-conteudo: 420px;
 }
 
 * {
   box-sizing: border-box;
-}
-
-html,
-body {
   margin: 0;
-  padding: 0;
 }
 
 body {
-  background: var(--bg-claro);
+  background: var(--fundo);
   color: var(--tinta);
-  font-family: var(--fonte-texto);
+  font-family: var(--fonte);
   -webkit-font-smoothing: antialiased;
-}
-
-h1,
-h2,
-h3 {
-  font-family: var(--fonte-titulo);
-  margin: 0;
-  text-transform: uppercase;
-  letter-spacing: 0.01em;
-}
-
-button {
-  font-family: var(--fonte-destaque);
 }
