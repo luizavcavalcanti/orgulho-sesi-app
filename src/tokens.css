@@ -1,0 +1,105 @@
+/*
+  Tokens da identidade visual "Orgulho de Ser Sesi", extraída dos materiais
+  impressos oficiais do evento (KV 2026). Se a marca mudar, é aqui que se mexe.
+*/
+
+@font-face {
+  font-family: 'Oravel';
+  src: url('/fonts/Oravel-Regular.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Oravel Inline';
+  src: url('/fonts/Oravel-Inline.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Owine Soul';
+  src: url('/fonts/OwineSoul-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neo Sans Std';
+  src: url('/fonts/NeoSansStd-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neo Sans Std';
+  src: url('/fonts/NeoSansStd-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neo Sans Std';
+  src: url('/fonts/NeoSansStd-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+:root {
+  /* paleta oficial */
+  --azul: #254ba0;
+  --amarelo: #f9b919;
+  --verde: #5dc137;
+  --vermelho: #f62528;
+
+  --azul-escuro: #1a3776;
+  --amarelo-claro: #fdd77a;
+  --tinta: #1c1c1c;
+  --bg-claro: #fef9ef;
+  --branco: #ffffff;
+  --cinza-linha: #e4ded0;
+
+  /* tipografia */
+  --fonte-titulo: 'Oravel', 'Arial Black', sans-serif;
+  --fonte-titulo-inline: 'Oravel Inline', 'Arial Black', sans-serif;
+  --fonte-destaque: 'Owine Soul', cursive, sans-serif;
+  --fonte-texto: 'Neo Sans Std', 'Helvetica Neue', Arial, sans-serif;
+
+  /* o visual "adesivo" do evento: sombra sólida, sem blur, offset fixo */
+  --sombra-sticker: 4px 4px 0 var(--tinta);
+  --sombra-sticker-sm: 3px 3px 0 var(--tinta);
+  --raio: 20px;
+  --raio-pequeno: 12px;
+
+  --largura-conteudo: 480px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg-claro);
+  color: var(--tinta);
+  font-family: var(--fonte-texto);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--fonte-titulo);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+button {
+  font-family: var(--fonte-destaque);
+}

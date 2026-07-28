@@ -1,0 +1,268 @@
+@import './tokens.css';
+
+#app {
+  max-width: var(--largura-conteudo);
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 24px 20px 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.topo-marca {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.topo-marca img {
+  width: 160px;
+  height: auto;
+}
+
+/* --- cartão base no estilo adesivo --- */
+.cartao {
+  background: var(--branco);
+  border: 3px solid var(--tinta);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra-sticker);
+  padding: 24px;
+}
+
+.tela {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+}
+
+.tela-titulo {
+  font-size: 28px;
+  color: var(--azul);
+  text-align: center;
+}
+
+.tela-subtitulo {
+  font-family: var(--fonte-destaque);
+  font-size: 20px;
+  color: var(--vermelho);
+  text-align: center;
+  margin-top: -12px;
+}
+
+/* --- formulário de cadastro --- */
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.campo label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--azul-escuro);
+}
+
+.campo input {
+  font-family: var(--fonte-texto);
+  font-size: 16px;
+  padding: 14px 16px;
+  border: 3px solid var(--tinta);
+  border-radius: var(--raio-pequeno);
+  background: var(--bg-claro);
+}
+
+.campo input:focus {
+  outline: none;
+  border-color: var(--azul);
+  background: var(--branco);
+}
+
+.campo-erro {
+  color: var(--vermelho);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* --- botões --- */
+.botao {
+  font-size: 18px;
+  padding: 16px 24px;
+  border: 3px solid var(--tinta);
+  border-radius: var(--raio-pequeno);
+  box-shadow: var(--sombra-sticker-sm);
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+  text-align: center;
+}
+
+.botao:active {
+  transform: translate(3px, 3px);
+  box-shadow: none;
+}
+
+.botao-primario {
+  background: var(--amarelo);
+  color: var(--tinta);
+}
+
+.botao-secundario {
+  background: var(--branco);
+  color: var(--azul);
+}
+
+.botao:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: var(--sombra-sticker-sm);
+}
+
+/* --- home / resumo de pontos --- */
+.placar-pessoal {
+  background: var(--azul);
+  color: var(--branco);
+  border-radius: var(--raio);
+  border: 3px solid var(--tinta);
+  box-shadow: var(--sombra-sticker);
+  padding: 20px 24px;
+  text-align: center;
+}
+
+.placar-pessoal .numero {
+  font-family: var(--fonte-titulo-inline);
+  font-size: 56px;
+  color: var(--amarelo);
+  line-height: 1;
+}
+
+.placar-pessoal .rotulo {
+  font-family: var(--fonte-destaque);
+  font-size: 16px;
+  margin-top: 4px;
+}
+
+.lista-atividades {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.item-atividade {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--branco);
+  border: 3px solid var(--tinta);
+  border-radius: var(--raio-pequeno);
+  padding: 12px 16px;
+}
+
+.item-atividade.feita {
+  background: var(--bg-claro);
+  opacity: 0.7;
+}
+
+.item-atividade .selo {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--tinta);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.item-atividade.feita .selo {
+  background: var(--verde);
+  color: var(--branco);
+}
+
+.item-atividade .info {
+  flex: 1;
+}
+
+.item-atividade .nome {
+  font-weight: 700;
+}
+
+.item-atividade .pontos {
+  font-size: 13px;
+  color: var(--azul-escuro);
+}
+
+/* --- leitor de QR --- */
+.leitor-qr {
+  position: relative;
+  border: 3px solid var(--tinta);
+  border-radius: var(--raio);
+  overflow: hidden;
+  background: var(--tinta);
+  aspect-ratio: 1 / 1;
+}
+
+#leitor-camera {
+  width: 100%;
+  height: 100%;
+}
+
+.leitor-status {
+  text-align: center;
+  font-weight: 700;
+  color: var(--azul-escuro);
+}
+
+/* --- resultado do scan --- */
+.resultado-icone {
+  font-size: 64px;
+  text-align: center;
+}
+
+.resultado-pontos {
+  font-family: var(--fonte-titulo-inline);
+  font-size: 48px;
+  color: var(--verde);
+  text-align: center;
+}
+
+.resultado-mensagem {
+  text-align: center;
+  font-size: 16px;
+}
+
+/* --- rodapé de navegação --- */
+.rodape-nav {
+  display: flex;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--tinta);
+  color: var(--branco);
+  padding: 12px 20px;
+  border-radius: var(--raio-pequeno);
+  font-size: 14px;
+  font-weight: 700;
+  z-index: 50;
+  max-width: calc(100% - 40px);
+  text-align: center;
+}
+
+.toast-erro {
+  background: var(--vermelho);
+}
+
+.carregando {
+  text-align: center;
+  color: var(--azul-escuro);
+  font-weight: 700;
+  padding: 40px 0;
+}
