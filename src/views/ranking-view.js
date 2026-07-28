@@ -1,25 +1,32 @@
 import { escutarRanking } from '../ranking.js';
 import { nomeExibicao } from '../auth.js';
+import { hero } from '../utils/hero.js';
 
 let pararDeEscutar = null;
 
 export function render(raiz, { uid, perfil }, navegar) {
   raiz.innerHTML = `
-    <div class="tela">
-      <h1 class="tela-titulo" style="font-size: 22px;">Ranking geral</h1>
-      <div id="lista-ranking" class="lista-atividades">
-        <p class="carregando">Carregando...</p>
+    ${hero({ chapeu: 'Atualizado agora', titulo: 'Ranking geral' })}
+    <div class="corpo">
+      <div class="cartao">
+        <h3>Top 10 do dia</h3>
+        <div id="lista-ranking"><p class="carregando">Carregando...</p></div>
       </div>
-      <button id="botao-voltar" class="botao botao-secundario">Voltar</button>
+      <div class="rodape-nav">
+        <button id="botao-voltar" class="botao-neutro">Voltar</button>
+      </div>
     </div>
   `;
 
-  raiz.querySelector('#botao-voltar').addEventListener('click', () => {
-    import('./inicio.js').then((view) => navegar(view, { uid, perfil }));
+  raiz.querySelector('#botao-voltar').addEventListener('click', async () => {
+    const view = await import('./inicio.js');
+    navegar(view, { uid, perfil });
   });
 
   const lista = raiz.querySelector('#lista-ranking');
-  pararDeEscutar = escutarRanking(20, (posicoes) => {
+  const classePorPodio = { 1: 'ouro', 2: 'prata', 3: 'bronze' };
+
+  pararDeEscutar = escutarRanking(10, (posicoes) => {
     if (posicoes.length === 0) {
       lista.innerHTML = '<p class="carregando">Ninguém pontuou ainda.</p>';
       return;
@@ -28,13 +35,12 @@ export function render(raiz, { uid, perfil }, navegar) {
     lista.innerHTML = posicoes
       .map((pessoa) => {
         const souEu = pessoa.uid === uid;
+        const podio = classePorPodio[pessoa.posicao] ?? '';
         return `
-          <div class="item-atividade" style="${souEu ? 'border-color: var(--azul); border-width: 3px;' : ''}">
-            <div class="selo">${pessoa.posicao}</div>
-            <div class="info">
-              <div class="nome">${nomeExibicao(pessoa)}${souEu ? ' (você)' : ''}</div>
-            </div>
-            <div class="pontos">${pessoa.pontos} pts</div>
+          <div class="linha-ranking ${souEu ? 'sou-eu' : ''}">
+            <span class="posicao ${podio}">${pessoa.posicao}</span>
+            <span class="nome">${nomeExibicao(pessoa)}</span>
+            <span class="pontos">${pessoa.pontos}</span>
           </div>
         `;
       })
