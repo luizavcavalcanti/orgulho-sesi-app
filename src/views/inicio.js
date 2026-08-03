@@ -31,7 +31,7 @@ export function render(raiz, { uid, perfil }, navegar) {
             (a) => `
               <div class="atividade-feita">
                 <span class="marca">✓</span>${a.nome}
-                <span class="pontos">+${a.pontos}</span>
+                <span class="pontos">${a.resumo}</span>
               </div>
             `
           )
@@ -41,7 +41,7 @@ export function render(raiz, { uid, perfil }, navegar) {
             (a) => `
               <div class="atividade-pendente">
                 <span class="marca"></span>${a.nome}
-                <span class="pontos">+${a.pontos}</span>
+                <span class="pontos">${a.resumo}</span>
               </div>
             `
           )

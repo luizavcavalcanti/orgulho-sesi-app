@@ -10,7 +10,7 @@ export const ATIVIDADES = [
   { id: 'jogo-interativo', nome: 'Jogo Solução na Casa da Indústria', resumo: 'até 20 pontos' },
   { id: 'armario', nome: 'Armário Premiado', resumo: '5 a 30 pontos, conforme o dado' },
   { id: 'oficina-cultura', nome: 'Oficina de Cultura', resumo: '20 pontos' },
-  { id: 'quizz', nome: 'Quizz', resumo: '10 a 20 pontos, conforme a colocação' },
+  { id: 'quiz', nome: 'Quiz', resumo: '10 a 20 pontos, conforme a colocação' },
   { id: 'oficina-saude-1', nome: 'Oficina de Saúde 1', resumo: '15 pontos' },
   { id: 'oficina-saude-2', nome: 'Oficina de Saúde 2', resumo: '15 pontos' },
   { id: 'oficina-eja', nome: 'Oficina EJA', resumo: '15 pontos' },
@@ -36,10 +36,10 @@ export const CODIGOS = {
   'armario-5': { atividade: 'armario', pontos: 25 },
   'armario-6': { atividade: 'armario', pontos: 30 },
 
-  'quizz-1-lugar': { atividade: 'quizz', pontos: 20 },
-  'quizz-2-lugar': { atividade: 'quizz', pontos: 15 },
-  'quizz-3-lugar': { atividade: 'quizz', pontos: 15 },
-  'quizz-participacao': { atividade: 'quizz', pontos: 10 },
+  'quiz-1-lugar': { atividade: 'quiz', pontos: 20 },
+  'quiz-2-lugar': { atividade: 'quiz', pontos: 15 },
+  'quiz-3-lugar': { atividade: 'quiz', pontos: 15 },
+  'quiz-participacao': { atividade: 'quiz', pontos: 10 },
 
   'oficina-cultura': { atividade: 'oficina-cultura', pontos: 20 },
   'oficina-saude-1': { atividade: 'oficina-saude-1', pontos: 15 },
