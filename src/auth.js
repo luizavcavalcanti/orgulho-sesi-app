@@ -1,4 +1,4 @@
-import { signInAnonymously, onAuthStateChanged } from 'firebase/auth';
+efjçhwfimport { signInAnonymously, onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { auth, db } from './firebase.js';
 
