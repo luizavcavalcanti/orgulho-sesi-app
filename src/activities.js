@@ -10,7 +10,7 @@ export const ATIVIDADES = [
   { id: 'jogo-interativo', nome: 'Jogo Solução na Casa da Indústria', resumo: 'até 20 pontos' },
   { id: 'armario', nome: 'Armário Premiado', resumo: '5 a 30 pontos, conforme o dado' },
   { id: 'oficina-cultura', nome: 'Oficina de Cultura', resumo: '20 pontos' },
-  { id: 'quiz', nome: 'Quiz', resumo: '10 a 20 pontos, conforme a colocação' },
+  { id: 'quizz', nome: 'Quizz', resumo: '10 a 20 pontos, conforme a colocação' },
   { id: 'oficina-saude-1', nome: 'Oficina de Saúde 1', resumo: '15 pontos' },
   { id: 'oficina-saude-2', nome: 'Oficina de Saúde 2', resumo: '15 pontos' },
   { id: 'oficina-eja', nome: 'Oficina EJA', resumo: '15 pontos' },
