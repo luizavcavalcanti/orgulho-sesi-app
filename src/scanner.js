@@ -22,7 +22,7 @@ export class LeitorQR {
         // enquanto a câmera continua enquadrando o código.
         if (jaLeu) return;
         jaLeu = true;
-        aoLer(extrairIdAtividade(textoDecodificado));
+        aoLer(extrairCodigo(textoDecodificado));
       },
       () => {
         // frame sem QR legível, ignorado de propósito
@@ -45,7 +45,7 @@ export class LeitorQR {
 // Aceita tanto um id puro ("oficina-robotica") quanto uma URL completa
 // (https://.../scan?atividade=oficina-robotica), pra dar liberdade na hora
 // de gerar os QR codes de cada estação do evento.
-function extrairIdAtividade(textoLido) {
+function extrairCodigo(textoLido) {
   try {
     const url = new URL(textoLido);
     const idPelaQuery = url.searchParams.get('atividade');
