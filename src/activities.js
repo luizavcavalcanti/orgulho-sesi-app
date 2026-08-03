@@ -1,21 +1,21 @@
 // Cada QR code do evento carrega um "código". A maior parte das dinâmicas
 // tem um código só; três variam a pontuação: o jogo interativo (desempenho
-// da equipe), o armário (face do dado) e o quiz (colocação).
+// da equipe), o armário (face do dado) e o quizz (colocação).
 //
 // Todos os códigos de uma mesma dinâmica gravam a MESMA atividade no
 // perfil — é isso que impede alguém de escanear as seis faces do dado e
 // somar tudo: a segunda tentativa cai na trava de atividade repetida.
 
 export const ATIVIDADES = [
-  { id: 'jogo-interativo', nome: 'Jogo Solução na Casa da Indústria', resumo: 'até 20 pontos' },
-  { id: 'armario', nome: 'Armário Premiado', resumo: '5 a 30 pontos, conforme o dado' },
-  { id: 'oficina-cultura', nome: 'Oficina de Cultura', resumo: '20 pontos' },
-  { id: 'quizz', nome: 'Quizz', resumo: '10 a 20 pontos, conforme a colocação' },
-  { id: 'oficina-saude-1', nome: 'Oficina de Saúde 1', resumo: '15 pontos' },
-  { id: 'oficina-saude-2', nome: 'Oficina de Saúde 2', resumo: '15 pontos' },
-  { id: 'oficina-eja', nome: 'Oficina EJA', resumo: '15 pontos' },
-  { id: 'oficina-areas', nome: 'Oficina Áreas de Conhecimento', resumo: '15 pontos' },
-  { id: 'oficina-aee', nome: 'Oficina AEE', resumo: '15 pontos' },
+  { id: 'jogo-interativo', nome: 'Jogo Solução na Casa da Indústria', resumo: 'até 20 pts' },
+  { id: 'armario', nome: 'Armário Premiado', resumo: '5 a 30 pts' },
+  { id: 'oficina-cultura', nome: 'Oficina de Cultura', resumo: '20 pts' },
+  { id: 'quizz', nome: 'Quizz', resumo: '10 a 20 pts' },
+  { id: 'oficina-saude-1', nome: 'Oficina de Saúde 1', resumo: '15 pts' },
+  { id: 'oficina-saude-2', nome: 'Oficina de Saúde 2', resumo: '15 pts' },
+  { id: 'oficina-eja', nome: 'Oficina EJA', resumo: '15 pts' },
+  { id: 'oficina-areas', nome: 'Oficina Áreas de Conhecimento', resumo: '15 pts' },
+  { id: 'oficina-aee', nome: 'Oficina AEE', resumo: '15 pts' },
 ];
 
 // O jogo soma peça a peça (4 por acerto, +3 por fechar as três camadas,
@@ -36,10 +36,10 @@ export const CODIGOS = {
   'armario-5': { atividade: 'armario', pontos: 25 },
   'armario-6': { atividade: 'armario', pontos: 30 },
 
-  'quiz-1-lugar': { atividade: 'quiz', pontos: 20 },
-  'quiz-2-lugar': { atividade: 'quiz', pontos: 15 },
-  'quiz-3-lugar': { atividade: 'quiz', pontos: 15 },
-  'quiz-participacao': { atividade: 'quiz', pontos: 10 },
+  'quizz-1-lugar': { atividade: 'quizz', pontos: 20 },
+  'quizz-2-lugar': { atividade: 'quizz', pontos: 15 },
+  'quizz-3-lugar': { atividade: 'quizz', pontos: 15 },
+  'quizz-participacao': { atividade: 'quizz', pontos: 10 },
 
   'oficina-cultura': { atividade: 'oficina-cultura', pontos: 20 },
   'oficina-saude-1': { atividade: 'oficina-saude-1', pontos: 15 },
