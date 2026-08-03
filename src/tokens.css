@@ -4,7 +4,84 @@
   Sobre tipografia: a Neo Sans carrega a interface inteira, inclusive os
   títulos, no peso 900. A Oravel é fonte de pôster — bonita, mas ilegível em
   corpo pequeno de celular; por isso ela só aparece no número grande da
+  pontuação, que é onde o desenho de/*
+  Tokens da identidade visual "Orgulho de Ser Sesi" (KV 2026).
+
+  Sobre tipografia: a Neo Sans carrega a interface inteira, inclusive os
+  títulos, no peso 900. A Oravel é fonte de pôster — bonita, mas ilegível em
+  corpo pequeno de celular; por isso ela só aparece no número grande da
   pontuação, que é onde o desenho dela funciona.
+*/
+
+@font-face {
+  font-family: 'Oravel';
+  src: url('/fonts/Oravel-Regular.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neo Sans';
+  src: url('/fonts/NeoSansStd-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neo Sans';
+  src: url('/fonts/NeoSansStd-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neo Sans';
+  src: url('/fonts/NeoSansStd-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neo Sans';
+  src: url('/fonts/NeoSansStd-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-display: swap;
+}
+
+:root {
+  --azul: #254ba0;
+  --azul-profundo: #1b3a80;
+  --azul-claro: #4377c5;
+  --amarelo: #f9b919;
+  --amarelo-sombra: #c98f0f;
+  --verde: #5dc137;
+  --vermelho: #f62528;
+  --ciano: #4dc5e3;
+
+  --tinta: #12224d;
+  --apagado: #7c89a6;
+  --linha: #dfe5f2;
+  --fundo: #f6f8fc;
+  --branco: #ffffff;
+
+  --fonte: 'Neo Sans', 'Helvetica Neue', Arial, sans-serif;
+  --fonte-numero: 'Oravel', 'Arial Black', sans-serif;
+
+  --largura-conteudo: 420px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  background: var(--fundo);
+  color: var(--tinta);
+  font-family: var(--fonte);
+  -webkit-font-smoothing: antialiased;
+}
+la funciona.
 */
 
 @font-face {
