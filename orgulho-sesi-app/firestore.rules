@@ -2,33 +2,51 @@ rules_version = '2';
 
 // Regras do banco pro app "Orgulho de Ser Sesi". A ideia central: o app
 // nunca é a fonte da verdade sobre pontos, o Firestore é. Mesmo que alguém
-// abra o devtools e tente escrever direto na coleção, essas regras barram
+// abra o devtools e tente escrever direto na coleção, estas regras barram
 // qualquer coisa fora do fluxo esperado.
 //
-// IMPORTANTE: a tabela de pontos abaixo tem que ficar igual à de
-// src/activities.js. Se mudar uma, muda a outra.
+// IMPORTANTE: a tabela abaixo tem que ficar igual à de src/activities.js.
+// Como três dinâmicas têm pontuação variável (armário, quiz e futuramente o
+// jogo), o que se valida aqui é se o acréscimo de pontos está entre os
+// valores possíveis daquela dinâmica.
 service cloud.firestore {
   match /databases/{database}/documents {
-
-    function pontosDaAtividade(id) {
-      return {
-        'oficina-robotica': 20,
-        'trilha-seguranca': 15,
-        'espaco-maker': 20,
-        'mostra-projetos': 15,
-        'jogo-casa-industria': 25,
-        'roda-conversa': 15,
-      }[id];
-    }
-
     match /participantes/{uid} {
+
+      function pontosPermitidos(atividade) {
+        return {
+          'jogo-interativo': [3, 4, 7, 8, 11, 12, 15, 16, 20],
+          'armario': [5, 10, 15, 20, 25, 30],
+          'oficina-cultura': [20],
+          'quiz': [10, 15, 20],
+          'oficina-saude-1': [15],
+          'oficina-saude-2': [15],
+          'oficina-eja': [15],
+          'oficina-areas': [15],
+          'oficina-aee': [15]
+        }.get(atividade, []);
+      }
+
+      // A dinâmica recém-escaneada é a última da lista nova. A linguagem de
+      // regras não tem índice negativo, mas o índice dela é justamente o
+      // tamanho da lista antiga.
+      function atividadeAdicionada() {
+        return request.resource.data.atividadesConcluidas[
+          resource.data.atividadesConcluidas.size()
+        ];
+      }
+
+      function pontosGanhos() {
+        return request.resource.data.pontos - resource.data.pontos;
+      }
+
       // O ranking precisa ler a coleção inteira (TV e tela de ranking no
-      // app), então leitura é pública. Nada aqui é dado sensível — só nome,
+      // app), então leitura é pública. Nada aqui é sensível — só nome,
       // sobrenome e pontuação.
       allow read: if true;
 
-      // Cadastro: só o próprio dono do crachá anônimo pode criar o
-      // documento dele, e só uma vez.
+      // Cadastro: só o próprio dono do crachá anônimo cria o documento
+      // dele, e sempre zerado.
       allow create: if request.auth != null
         && request.auth.uid == uid
         && request.resource.data.pontos == 0
@@ -37,19 +55,19 @@ service cloud.firestore {
         && request.resource.data.sobrenome is string
         && request.resource.data.matriculaParcial.matches('^[0-9]{3}$');
 
-      // Pontuação: só permite adicionar exatamente UMA atividade nova por
-      // escrita, e só se ela ainda não estava na lista, e só se os pontos
-      // batem com o valor oficial daquela atividade. Nome/sobrenome/matrícula
-      // não podem ser alterados depois do cadastro.
+      // Pontuação: permite acrescentar exatamente UMA dinâmica por escrita,
+      // desde que ela ainda não estivesse na lista e que o acréscimo de
+      // pontos seja um dos valores válidos dela. Identificação não muda
+      // depois do cadastro.
       allow update: if request.auth != null
         && request.auth.uid == uid
         && request.resource.data.nome == resource.data.nome
         && request.resource.data.sobrenome == resource.data.sobrenome
         && request.resource.data.matriculaParcial == resource.data.matriculaParcial
-        && request.resource.data.atividadesConcluidas.size() == resource.data.atividadesConcluidas.size() + 1
-        && !(request.resource.data.atividadesConcluidas[-1] in resource.data.atividadesConcluidas)
-        && request.resource.data.pontos == resource.data.pontos
-          + pontosDaAtividade(request.resource.data.atividadesConcluidas[-1]);
+        && request.resource.data.atividadesConcluidas.size()
+             == resource.data.atividadesConcluidas.size() + 1
+        && !(atividadeAdicionada() in resource.data.atividadesConcluidas)
+        && pontosGanhos() in pontosPermitidos(atividadeAdicionada());
 
       allow delete: if false;
     }

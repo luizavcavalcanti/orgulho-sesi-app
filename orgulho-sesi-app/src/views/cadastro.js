@@ -2,7 +2,7 @@ import { criarPerfil } from '../auth.js';
 import { hero } from '../utils/hero.js';
 import { mostrarToast } from '../utils/toast.js';
 
-export function render(raiz, { uid }, navegar) {
+export function render(raiz, { uid, codigoPendente = null }, navegar) {
   raiz.innerHTML = `
     ${hero({
       chapeu: 'Bem-vindo ao evento',
@@ -61,6 +61,11 @@ export function render(raiz, { uid }, navegar) {
 
     try {
       const perfil = await criarPerfil(uid, { nome, sobrenome, matriculaParcial: matricula });
+      if (codigoPendente) {
+        const view = await import('./pontuar.js');
+        navegar(view, { uid, codigo: codigoPendente });
+        return;
+      }
       const view = await import('./inicio.js');
       navegar(view, { uid, perfil });
     } catch (erro) {

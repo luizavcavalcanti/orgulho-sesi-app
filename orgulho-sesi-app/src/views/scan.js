@@ -1,5 +1,5 @@
 import { LeitorQR } from '../scanner.js';
-import { pontuarAtividade, AtividadeInvalidaError, AtividadeRepetidaError } from '../scoring.js';
+import { pontuarCodigo, CodigoInvalidoError, AtividadeRepetidaError } from '../scoring.js';
 import { buscarPerfil } from '../auth.js';
 import { hero } from '../utils/hero.js';
 import { mostrarToast } from '../utils/toast.js';
@@ -32,18 +32,18 @@ export function render(raiz, { uid }, navegar) {
   raiz.querySelector('#botao-cancelar').addEventListener('click', voltarParaInicio);
 
   leitor
-    .iniciar(async (atividadeId) => {
+    .iniciar(async (codigo) => {
       status.textContent = 'Registrando...';
       await leitor.parar();
 
       try {
-        const { atividade } = await pontuarAtividade(uid, atividadeId);
+        const { atividade, pontosGanhos } = await pontuarCodigo(uid, codigo);
         status.textContent = '';
         areaResultado.innerHTML = `
           <div class="confirmacao">
             <span class="marca">✓</span>
             <div>
-              <b>+${atividade.pontos} pontos</b><br />
+              <b>+${pontosGanhos} pontos</b><br />
               <span>${atividade.nome} registrada</span>
             </div>
           </div>
@@ -58,8 +58,8 @@ export function render(raiz, { uid }, navegar) {
           setTimeout(voltarParaInicio, 2200);
           return;
         }
-        if (erro instanceof AtividadeInvalidaError) {
-          mostrarToast('Esse QR code não é de uma atividade do evento.', { erro: true });
+        if (erro instanceof CodigoInvalidoError) {
+          mostrarToast('Esse QR code não é de uma dinâmica do evento.', { erro: true });
         } else {
           console.error(erro);
           mostrarToast('Não deu pra registrar o ponto. Tenta de novo.', { erro: true });
