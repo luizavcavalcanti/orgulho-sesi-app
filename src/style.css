@@ -340,6 +340,7 @@
   overflow: hidden;
   aspect-ratio: 1 / 1;
   position: relative;
+  max-height: 62vh;
 }
 
 #leitor-camera {
