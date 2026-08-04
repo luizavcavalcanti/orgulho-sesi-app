@@ -37,6 +37,12 @@ export async function pontuarCodigo(uid, codigo) {
     transacao.update(ref, {
       pontos: pontosAtualizados,
       atividadesConcluidas: [...jaFeitas, entrada.atividade],
+      // guarda quanto rendeu cada dinamica: as de pontuacao variavel
+      // (jogo, armario, quizz) precisam mostrar o valor real depois
+      pontosPorAtividade: {
+        ...(dados.pontosPorAtividade ?? {}),
+        [entrada.atividade]: entrada.pontos,
+      },
     });
 
     return { atividade, pontosGanhos: entrada.pontos, pontosAtualizados };
