@@ -33,12 +33,13 @@ export async function buscarPerfil(uid) {
 // isso aqui é só o que aparece pro participante e no ranking.
 export async function criarPerfil(uid, { nome, sobrenome, matriculaParcial }) {
   const ref = doc(db, 'participantes', uid);
-  const dados = {
+ const dados = {
     nome: nome.trim(),
     sobrenome: sobrenome.trim(),
     matriculaParcial: matriculaParcial.trim(),
     pontos: 0,
     atividadesConcluidas: [],
+    pontosPorAtividade: {},
     criadoEm: serverTimestamp(),
   };
   await setDoc(ref, dados);
