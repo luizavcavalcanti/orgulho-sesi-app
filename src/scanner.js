@@ -11,7 +11,16 @@ export class LeitorQR {
 
   async iniciar(aoLer) {
     this.instancia = new Html5Qrcode(ID_ELEMENTO);
-    const config = { fps: 10, qrbox: { width: 240, height: 240 } };
+  const config = {
+      fps: 10,
+      // A area de leitura acompanha o tamanho do video em vez de ser fixa:
+      // em tela pequena um quadro de 240px sobra, em tela grande falta.
+      qrbox: (larguraVideo, alturaVideo) => {
+        const lado = Math.floor(Math.min(larguraVideo, alturaVideo) * 0.75);
+        return { width: lado, height: lado };
+      },
+      aspectRatio: 1,
+    };
 
     let jaLeu = false;
     await this.instancia.start(
