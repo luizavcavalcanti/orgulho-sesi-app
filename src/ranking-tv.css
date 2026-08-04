@@ -49,7 +49,8 @@ body {
 }
 
 .tv-topo img {
-  height: 84px;
+  height: auto;
+  width: 240px;
 }
 
 .tv-topo .titulo {
