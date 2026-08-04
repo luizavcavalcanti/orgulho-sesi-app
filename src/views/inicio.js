@@ -4,6 +4,7 @@ import { posicaoDoParticipante } from '../ranking.js';
 
 export function render(raiz, { uid, perfil }, navegar) {
   const concluidas = new Set(perfil.atividadesConcluidas ?? []);
+  const ganhos = perfil.pontosPorAtividade ?? {};
   const feitas = ATIVIDADES.filter((a) => concluidas.has(a.id));
   const pendentes = ATIVIDADES.filter((a) => !concluidas.has(a.id));
 
@@ -29,12 +30,10 @@ export function render(raiz, { uid, perfil }, navegar) {
         ${feitas
           .map(
             (a) => `
-              <div class="atividade-feita">
+      <div class="atividade-feita">
                 <span class="marca">✓</span>${a.nome}
-                <span class="pontos">${a.resumo}</span>
+                <span class="pontos">+${ganhos[a.id] ?? 0} pts</span>
               </div>
-            `
-          )
           .join('')}
         ${pendentes
           .map(
